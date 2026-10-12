@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mall-gateway
+
+mall:
+  jwt:
+    secret: ${MALL_JWT_SECRET:sample-mall-dev-secret-change-me-0123456789}
+  services:
+    user: ${MALL_USER_URL:http://localhost:8081}
+    product: ${MALL_PRODUCT_URL:http://localhost:8082}
+    order: ${MALL_ORDER_URL:http://localhost:8083}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

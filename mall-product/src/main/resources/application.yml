@@ -1,0 +1,20 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: mall-product
+  datasource:
+    url: ${MALL_PRODUCT_DB_URL:jdbc:h2:mem:mall_product;DB_CLOSE_DELAY=-1}
+    username: ${MALL_DB_USER:sa}
+    password: ${MALL_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

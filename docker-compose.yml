@@ -1,0 +1,31 @@
+# docker compose up --build   -> gateway http://localhost:8080
+x-service: &service
+  build:
+    context: .
+  environment: &env
+    MALL_JWT_SECRET: sample-mall-dev-secret-change-me-0123456789
+
+services:
+  mall-user:
+    <<: *service
+    build: { context: ., args: { MODULE: mall-user } }
+  mall-product:
+    <<: *service
+    build: { context: ., args: { MODULE: mall-product } }
+  mall-order:
+    <<: *service
+    build: { context: ., args: { MODULE: mall-order } }
+    environment:
+      <<: *env
+      MALL_PRODUCT_URL: http://mall-product:8082
+  mall-gateway:
+    <<: *service
+    build: { context: ., args: { MODULE: mall-gateway } }
+    environment:
+      <<: *env
+      MALL_USER_URL: http://mall-user:8081
+      MALL_PRODUCT_URL: http://mall-product:8082
+      MALL_ORDER_URL: http://mall-order:8083
+    ports:
+      - "8080:8080"
+    depends_on: [mall-user, mall-product, mall-order]

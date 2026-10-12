@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: mall-user
+  datasource:
+    url: ${MALL_USER_DB_URL:jdbc:h2:mem:mall_user;DB_CLOSE_DELAY=-1}
+    username: ${MALL_DB_USER:sa}
+    password: ${MALL_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+mall:
+  jwt:
+    secret: ${MALL_JWT_SECRET:sample-mall-dev-secret-change-me-0123456789}
+    ttl-seconds: 604800
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
